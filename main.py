@@ -82,7 +82,7 @@ def chat():
     formatted_prompt = PROMPT.format(history=history, input=input_text)
     response = llm.predict(text=formatted_prompt)
 
-    return jsonify({'response': response})
+    return jsonify({'input': input_text, 'response': response})
 
 
 if __name__ == '__main__':
