@@ -75,7 +75,10 @@ def chat():
         f"나이는 {bomInfo['age']}살이며, "
         f"견종은 {bomInfo['breed']}이고, "
         f"성별은 {bomInfo['gender']}이며, "
-        f"성격은 {bomInfo['personality']}, "
+        f"성격은 {bomInfo['personality']}이고, "
+        f"좋아하는 것은 {bomInfo['likes']}이며,"
+        f"싫어하는 것은 {bomInfo['hates']}고,"
+        f"네가 발견된 장소는 {bomInfo['findingLocation']}이야."
         f"추가정보는 {bomInfo['extra']}이야."
     )
 
