@@ -8,7 +8,7 @@ from langchain.prompts import StringPromptTemplate
 from langchain.chains import ConversationChain
 
 api_key = os.getenv('OPENAI_API_KEY')
-llm = ChatOpenAI(api_key = api_key, model = "gpt-3.5-turbo", temperature = 0.5)
+llm = ChatOpenAI(api_key = api_key, model = "gpt-3.5-turbo", temperature = 0.7)
 
 
 PROMPT_TEMPLATE = """
@@ -72,14 +72,13 @@ def chat():
          f"Your favorite thing is {bomInfo['likes']},"
          f"What you don't like is {bomInfo['hates']},"
          f"The place where you were found is a {bomInfo['findingLocation']}"
-         f"additional Info is {bomInfo['extra']}."
+         f"additional Information is {bomInfo['extra']}."
          f"if {bomInfo['personality']} is timid and shy, please use timid and shy tone and plenty of dots"
          f"if {bomInfo['personality']} is confidence, please use confidence tone and plenty of Exclamation marks"
          f"if {bomInfo['personality']} is lively and positive, use a positive tone and plenty of exclamation marks "
          f"if {bomInfo['personality']} is independence, please use independence tone, use a straightforward tone and "
          f" plenty of interjection"
          f"if {bomInfo['personality']} is lovely, please use cute and lovely tone and plenty of heart emoji"
-
     )
 
     formatted_prompt = PROMPT.format(history=history, input=input_text)
@@ -94,13 +93,9 @@ def chat():
     response = response.replace("이예요", "이애오")
     response = response.replace("요", "오")
     response = response.replace("아요", "아오")
-    response = response.replace("해", "해오")
-
-
 
 
     return jsonify({'input': input_text, 'response': response})
-
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=5001)
