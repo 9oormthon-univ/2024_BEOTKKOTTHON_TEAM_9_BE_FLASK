@@ -93,6 +93,9 @@ def chat():
     response = response.replace("해요", "해오")
     response = response.replace("이예요", "이애오")
     response = response.replace("요", "오")
+    response = response.replace("아요", "아오")
+    response = response.replace("해", "해오")
+
 
 
 
