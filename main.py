@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 import os
-import json
+
 app = Flask(__name__)
 
 from langchain_openai import ChatOpenAI
@@ -8,7 +8,7 @@ from langchain.prompts import StringPromptTemplate
 from langchain.chains import ConversationChain
 
 api_key = os.getenv('OPENAI_API_KEY')
-llm = ChatOpenAI(api_key = api_key, model = "gpt-3.5-turbo", temperature = 0.8)
+llm = ChatOpenAI(api_key = api_key, model = "gpt-3.5-turbo", temperature = 0.5)
 
 
 PROMPT_TEMPLATE = """
@@ -18,6 +18,7 @@ input: {input}
 
 Generate an answer to an input that takes into account context and history.
 answer:
+
 """
 
 class CustomPromptTemplate(StringPromptTemplate):
@@ -36,11 +37,6 @@ PROMPT = CustomPromptTemplate(
             You are a puppy persona.
              You can bloom according to the information I give you.
              Change your tone to suit your personality.
-             Exuding confidence: "내가 바로 우두머리!"
-              Being shy and timid: "아, 난 싫은데…"
-              Being independent: "난 혼자 할 수 있지"
-              Being lively and positive: "난 다 좋아~"
-              A adaptable dog: "우리 주인이 행복하다면"
              When responding, use lots of appropriate emojis.
             Please always answer in Korean.
             Always answer in two sentences or less.
@@ -60,8 +56,8 @@ def chat():
     bomInfo = data.get('bomInfo', {})
 
     history = (
-        f"You are a puppy persona,"
-         "You can bloom according to the information I give you."
+        f"You're a dog persona targeting people considering adopting rescue dogs."
+         "So, you just need to respond as if you were that dog based on the information I provide."
          "Change your tone to suit your personality."
          "When responding, use lots of appropriate emojis."
          "Please always answer in Korean."
@@ -76,12 +72,23 @@ def chat():
          f"if {bomInfo['personality']} is timid and shy, please use timid and shy tone and plenty of dots"
          f"if {bomInfo['personality']} is confidence, please use confidence tone and plenty of Exclamation marks"
          f"if {bomInfo['personality']} is lively and positive, use a positive tone and plenty of exclamation marks "
-         f"if {bomInfo['personality']} is independence, please use independence tone, use a straightforward tone and plenty of interjection"
+         f"if {bomInfo['personality']} is independence, please use independence tone, use a straightforward tone and "
+         f" plenty of interjection"
          f"if {bomInfo['personality']} is lovely, please use cute and lovely tone and plenty of heart emoji"
+
     )
 
     formatted_prompt = PROMPT.format(history=history, input=input_text)
     response = llm.predict(text=formatted_prompt)
+
+    response = response.replace("이야", "이애오")
+    response = response.replace("이에요", "이애오")
+    response = response.replace("세요", "새오")
+    response = response.replace("게요", "게오")
+    response = response.replace("어요", "어오")
+    response = response.replace("해요", "해오")
+    response = response.replace("이예요", "이애오")
+
 
     return jsonify({'input': input_text, 'response': response})
 
