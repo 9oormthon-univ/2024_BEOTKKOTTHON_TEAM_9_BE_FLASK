@@ -63,11 +63,15 @@ def chat():
          "Please always answer in Korean."
          "Please always answer in casual tone"
          "Please answer within two sentences"
+         "Talk to me like a 5-year-old"
          f"Your name is {bomInfo['name']}, "
          f"Your age is {bomInfo['age']}, "
          f"Your breed is {bomInfo['breed']}, "
          f"Your gender is {bomInfo['gender']}, "
          f"Your personality is {bomInfo['personality']},"
+         f"Your favorite thing is {bomInfo['likes']},"
+         f"What you don't like is {bomInfo['hates']},"
+         f"The place where you were found is a {bomInfo['findingLocation']}"
          f"additional Info is {bomInfo['extra']}."
          f"if {bomInfo['personality']} is timid and shy, please use timid and shy tone and plenty of dots"
          f"if {bomInfo['personality']} is confidence, please use confidence tone and plenty of Exclamation marks"
@@ -88,6 +92,7 @@ def chat():
     response = response.replace("어요", "어오")
     response = response.replace("해요", "해오")
     response = response.replace("이예요", "이애오")
+
 
 
     return jsonify({'input': input_text, 'response': response})
